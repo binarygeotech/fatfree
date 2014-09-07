@@ -1,7 +1,11 @@
 <?php
 
 /*
+<<<<<<< HEAD
 	Copyright (c) 2009-2014 F3::Factory/Bong Cosca, All rights reserved.
+=======
+	Copyright (c) 2009-2012 F3::Factory/Bong Cosca, All rights reserved.
+>>>>>>> 3.0.4 release
 
 	This file is part of the Fat-Free Framework (http://fatfree.sf.net).
 
@@ -19,9 +23,15 @@ namespace Web;
 class Geo extends \Prefab {
 
 	/**
+<<<<<<< HEAD
 	*	Return information about specified Unix time zone
 	*	@return array
 	*	@param $zone string
+=======
+		Return information about specified Unix time zone
+		@return array
+		@param $zone string
+>>>>>>> 3.0.4 release
 	**/
 	function tzinfo($zone) {
 		$ref=new \DateTimeZone($zone);
@@ -40,9 +50,15 @@ class Geo extends \Prefab {
 	}
 
 	/**
+<<<<<<< HEAD
 	*	Return geolocation data based on specified/auto-detected IP address
 	*	@return array|FALSE
 	*	@param $ip string
+=======
+		Return geolocation data based on specified/auto-detected IP address
+		@return array|FALSE
+		@param $ip string
+>>>>>>> 3.0.4 release
 	**/
 	function location($ip=NULL) {
 		$fw=\Base::instance();
@@ -76,10 +92,17 @@ class Geo extends \Prefab {
 	}
 
 	/**
+<<<<<<< HEAD
 	*	Return weather data based on specified latitude/longitude
 	*	@return array|FALSE
 	*	@param $latitude float
 	*	@param $longitude float
+=======
+		Return weather data based on specified latitude/longitude
+		@return array|FALSE
+		@param $latitude float
+		@param $longitude float
+>>>>>>> 3.0.4 release
 	**/
 	function weather($latitude,$longitude) {
 		$fw=\Base::instance();
@@ -89,6 +112,7 @@ class Geo extends \Prefab {
 			'lng'=>$longitude,
 			'username'=>$fw->hash($fw->get('IP'))
 		);
+<<<<<<< HEAD
 		return ($req=$web->request(
 			'http://ws.geonames.org/findNearByWeatherJSON?'.
 				http_build_query($query))) &&
@@ -96,6 +120,14 @@ class Geo extends \Prefab {
 			isset($data['weatherObservation'])?
 			$data['weatherObservation']:
 			FALSE;
+=======
+		if (($req=$web->request(
+			'http://ws.geonames.org/findNearByWeatherJSON?'.
+				http_build_query($query))) &&
+			$data=json_decode($req['body'],TRUE))
+			return $data['weatherObservation'];
+		return FALSE;
+>>>>>>> 3.0.4 release
 	}
 
 }

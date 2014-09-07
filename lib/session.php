@@ -1,7 +1,11 @@
 <?php
 
 /*
+<<<<<<< HEAD
 	Copyright (c) 2009-2014 F3::Factory/Bong Cosca, All rights reserved.
+=======
+	Copyright (c) 2009-2012 F3::Factory/Bong Cosca, All rights reserved.
+>>>>>>> 3.0.4 release
 
 	This file is part of the Fat-Free Framework (http://fatfree.sf.net).
 
@@ -16,6 +20,7 @@
 //! Cache-based session handler
 class Session {
 
+<<<<<<< HEAD
 	protected
 		//! Session ID
 		$sid;
@@ -25,20 +30,33 @@ class Session {
 	*	@return TRUE
 	*	@param $path string
 	*	@param $name string
+=======
+	/**
+		Open session
+		@return TRUE
+		@param $path string
+		@param $name string
+>>>>>>> 3.0.4 release
 	**/
 	function open($path,$name) {
 		return TRUE;
 	}
 
 	/**
+<<<<<<< HEAD
 	*	Close session
 	*	@return TRUE
+=======
+		Close session
+		@return TRUE
+>>>>>>> 3.0.4 release
 	**/
 	function close() {
 		return TRUE;
 	}
 
 	/**
+<<<<<<< HEAD
 	*	Return session data in serialized format
 	*	@return string|FALSE
 	*	@param $id string
@@ -46,10 +64,18 @@ class Session {
 	function read($id) {
 		if ($id!=$this->sid)
 			$this->sid=$id;
+=======
+		Return session data in serialized format
+		@return string|FALSE
+		@param $id string
+	**/
+	function read($id) {
+>>>>>>> 3.0.4 release
 		return Cache::instance()->exists($id.'.@',$data)?$data['data']:FALSE;
 	}
 
 	/**
+<<<<<<< HEAD
 	*	Write session data
 	*	@return TRUE
 	*	@param $id string
@@ -68,17 +94,36 @@ class Session {
 			array(
 				'data'=>$data,
 				'csrf'=>$sent?$this->csrf():$csrf,
+=======
+		Write session data
+		@return TRUE
+		@param $id string
+		@param $data string
+	**/
+	function write($id,$data) {
+		$fw=Base::instance();
+		$headers=$fw->get('HEADERS');
+		$jar=session_get_cookie_params();
+		Cache::instance()->set($id.'.@',
+			array(
+				'data'=>$data,
+>>>>>>> 3.0.4 release
 				'ip'=>$fw->get('IP'),
 				'agent'=>isset($headers['User-Agent'])?
 					$headers['User-Agent']:'',
 				'stamp'=>time()
 			),
+<<<<<<< HEAD
 			$jar['expire']?($jar['expire']-time()):0
+=======
+			$jar['lifetime']
+>>>>>>> 3.0.4 release
 		);
 		return TRUE;
 	}
 
 	/**
+<<<<<<< HEAD
 	*	Destroy session
 	*	@return TRUE
 	*	@param $id string
@@ -88,13 +133,27 @@ class Session {
 		setcookie(session_name(),'',strtotime('-1 year'));
 		unset($_COOKIE[session_name()]);
 		header_remove('Set-Cookie');
+=======
+		Destroy session
+		@return TRUE
+		@param $id string
+	**/
+	function destroy($id) {
+		Cache::instance()->clear($id.'.@');
+>>>>>>> 3.0.4 release
 		return TRUE;
 	}
 
 	/**
+<<<<<<< HEAD
 	*	Garbage collector
 	*	@return TRUE
 	*	@param $max int
+=======
+		Garbage collector
+		@return TRUE
+		@param $max int
+>>>>>>> 3.0.4 release
 	**/
 	function cleanup($max) {
 		Cache::instance()->reset('.@',$max);
@@ -102,6 +161,7 @@ class Session {
 	}
 
 	/**
+<<<<<<< HEAD
 	*	Return anti-CSRF token
 	*	@return string|FALSE
 	**/
@@ -144,6 +204,40 @@ class Session {
 	/**
 	*	Instantiate class
 	*	@return object
+=======
+		Return IP address associated with specified session ID
+		@return string|FALSE
+		@param $id string
+	**/
+	function ip($id=NULL) {
+		return Cache::instance()->exists(($id?:session_id()).'.@',$data)?
+			$data['ip']:FALSE;
+	}
+
+	/**
+		Return Unix timestamp associated with specified session ID
+		@return string|FALSE
+		@param $id string
+	**/
+	function stamp($id=NULL) {
+		return Cache::instance()->exists(($id?:session_id()).'.@',$data)?
+			$data['stamp']:FALSE;
+	}
+
+	/**
+		Return HTTP user agent associated with specified session ID
+		@return string|FALSE
+		@param $id string
+	**/
+	function agent($id=NULL) {
+		return Cache::instance()->exists(($id?:session_id()).'.@',$data)?
+			$data['agent']:FALSE;
+	}
+
+	/**
+		Instantiate class
+		@return object
+>>>>>>> 3.0.4 release
 	**/
 	function __construct() {
 		session_set_save_handler(
@@ -155,6 +249,7 @@ class Session {
 			array($this,'cleanup')
 		);
 		register_shutdown_function('session_commit');
+<<<<<<< HEAD
 		@session_start();
 		$fw=\Base::instance();
 		$headers=$fw->get('HEADERS');
@@ -175,6 +270,8 @@ class Session {
 				$jar['expire']?($jar['expire']-time()):0
 			);
 		}
+=======
+>>>>>>> 3.0.4 release
 	}
 
 }

@@ -1,7 +1,11 @@
 <?php
 
 /*
+<<<<<<< HEAD
 	Copyright (c) 2009-2014 F3::Factory/Bong Cosca, All rights reserved.
+=======
+	Copyright (c) 2009-2012 F3::Factory/Bong Cosca, All rights reserved.
+>>>>>>> 3.0.4 release
 
 	This file is part of the Fat-Free Framework (http://fatfree.sf.net).
 
@@ -21,10 +25,17 @@ class Log {
 		$file;
 
 	/**
+<<<<<<< HEAD
 	*	Write specified text to log file
 	*	@return string
 	*	@param $text string
 	*	@param $format string
+=======
+		Write specified text to log file
+		@return string
+		@param $text string
+		@param $format string
+>>>>>>> 3.0.4 release
 	**/
 	function write($text,$format='r') {
 		$fw=Base::instance();
@@ -39,16 +50,26 @@ class Log {
 	}
 
 	/**
+<<<<<<< HEAD
 	*	Erase log
 	*	@return NULL
+=======
+		Erase log
+		@return NULL
+>>>>>>> 3.0.4 release
 	**/
 	function erase() {
 		@unlink($this->file);
 	}
 
 	/**
+<<<<<<< HEAD
 	*	Instantiate class
 	*	@param $file string
+=======
+		Instantiate class
+		@param $file string
+>>>>>>> 3.0.4 release
 	**/
 	function __construct($file) {
 		$fw=Base::instance();

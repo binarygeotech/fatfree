@@ -1,7 +1,11 @@
 <?php
 
 /*
+<<<<<<< HEAD
 	Copyright (c) 2009-2014 F3::Factory/Bong Cosca, All rights reserved.
+=======
+	Copyright (c) 2009-2012 F3::Factory/Bong Cosca, All rights reserved.
+>>>>>>> 3.0.4 release
 
 	This file is part of the Fat-Free Framework (http://fatfree.sf.net).
 
@@ -14,7 +18,11 @@
 */
 
 //! Authorization/authentication plug-in
+<<<<<<< HEAD
 class Auth {
+=======
+class Auth extends Prefab {
+>>>>>>> 3.0.4 release
 
 	//@{ Error messages
 	const
@@ -22,7 +30,11 @@ class Auth {
 		E_SMTP='SMTP connection failure';
 	//@}
 
+<<<<<<< HEAD
 	protected
+=======
+	private
+>>>>>>> 3.0.4 release
 		//! Auth storage
 		$storage,
 		//! Mapper object
@@ -31,16 +43,28 @@ class Auth {
 		$args;
 
 	/**
+<<<<<<< HEAD
 	*	Jig storage handler
 	*	@return bool
 	*	@param $id string
 	*	@param $pw string
 	*	@param $realm string
+=======
+		Jig storage handler
+		@return bool
+		@param $id string
+		@param $pw string
+		@param $realm string
+>>>>>>> 3.0.4 release
 	**/
 	protected function _jig($id,$pw,$realm) {
 		return (bool)
 			call_user_func_array(
+<<<<<<< HEAD
 				array($this->mapper,'load'),
+=======
+				array($this->mapper,'findone'),
+>>>>>>> 3.0.4 release
 				array(
 					array_merge(
 						array(
@@ -57,6 +81,7 @@ class Auth {
 	}
 
 	/**
+<<<<<<< HEAD
 	*	MongoDB storage handler
 	*	@return bool
 	*	@param $id string
@@ -66,6 +91,17 @@ class Auth {
 	protected function _mongo($id,$pw,$realm) {
 		return (bool)
 			$this->mapper->load(
+=======
+		MongoDB storage handler
+		@return bool
+		@param $id string
+		@param $pw string
+		@param $realm string
+	**/
+	protected function _mongo($id,$pw,$realm) {
+		return (bool)
+			$this->mapper->findone(
+>>>>>>> 3.0.4 release
 				array(
 					$this->args['id']=>$id,
 					$this->args['pw']=>$pw
@@ -76,16 +112,28 @@ class Auth {
 	}
 
 	/**
+<<<<<<< HEAD
 	*	SQL storage handler
 	*	@return bool
 	*	@param $id string
 	*	@param $pw string
 	*	@param $realm string
+=======
+		SQL storage handler
+		@return bool
+		@param $id string
+		@param $pw string
+		@param $realm string
+>>>>>>> 3.0.4 release
 	**/
 	protected function _sql($id,$pw,$realm) {
 		return (bool)
 			call_user_func_array(
+<<<<<<< HEAD
 				array($this->mapper,'load'),
+=======
+				array($this->mapper,'findone'),
+>>>>>>> 3.0.4 release
 				array(
 					array_merge(
 						array(
@@ -102,10 +150,17 @@ class Auth {
 	}
 
 	/**
+<<<<<<< HEAD
 	*	LDAP storage handler
 	*	@return bool
 	*	@param $id string
 	*	@param $pw string
+=======
+		LDAP storage handler
+		@return bool
+		@param $id string
+		@param $pw string
+>>>>>>> 3.0.4 release
 	**/
 	protected function _ldap($id,$pw) {
 		$dc=@ldap_connect($this->args['dc']);
@@ -125,10 +180,17 @@ class Auth {
 	}
 
 	/**
+<<<<<<< HEAD
 	*	SMTP storage handler
 	*	@return bool
 	*	@param $id string
 	*	@param $pw string
+=======
+		SMTP storage handler
+		@return bool
+		@param $id string
+		@param $pw string
+>>>>>>> 3.0.4 release
 	**/
 	protected function _smtp($id,$pw) {
 		$socket=@fsockopen(
@@ -172,24 +234,39 @@ class Auth {
 	}
 
 	/**
+<<<<<<< HEAD
 	*	Login auth mechanism
 	*	@return bool
 	*	@param $id string
 	*	@param $pw string
 	*	@param $realm string
+=======
+		Login auth mechanism
+		@return bool
+		@param $id string
+		@param $pw string
+		@param $realm string
+>>>>>>> 3.0.4 release
 	**/
 	function login($id,$pw,$realm=NULL) {
 		return $this->{'_'.$this->storage}($id,$pw,$realm);
 	}
 
 	/**
+<<<<<<< HEAD
 	*	HTTP basic auth mechanism
 	*	@return bool
 	*	@param $func callback
+=======
+		HTTP basic auth mechanism
+		@return bool
+		@param $func callback
+>>>>>>> 3.0.4 release
 	**/
 	function basic($func=NULL) {
 		$fw=Base::instance();
 		$realm=$fw->get('REALM');
+<<<<<<< HEAD
 		$hdr=NULL;
 		if (isset($_SERVER['HTTP_AUTHORIZATION']))
 			$hdr=$_SERVER['HTTP_AUTHORIZATION'];
@@ -198,17 +275,24 @@ class Auth {
 		if (!empty($hdr))
 			list($_SERVER['PHP_AUTH_USER'],$_SERVER['PHP_AUTH_PW'])=
 				explode(':',base64_decode(substr($hdr,6)));
+=======
+>>>>>>> 3.0.4 release
 		if (isset($_SERVER['PHP_AUTH_USER'],$_SERVER['PHP_AUTH_PW']) &&
 			$this->login(
 				$_SERVER['PHP_AUTH_USER'],
 				$func?
+<<<<<<< HEAD
 					$fw->call($func,$_SERVER['PHP_AUTH_PW']):
+=======
+					$func($_SERVER['PHP_AUTH_PW']):
+>>>>>>> 3.0.4 release
 					$_SERVER['PHP_AUTH_PW'],
 				$realm
 			))
 			return TRUE;
 		if (PHP_SAPI!='cli')
 			header('WWW-Authenticate: Basic realm="'.$realm.'"');
+<<<<<<< HEAD
 		$fw->status(401);
 		return FALSE;
 	}
@@ -222,6 +306,21 @@ class Auth {
 	function __construct($storage,array $args=NULL) {
 		if (is_object($storage) && is_a($storage,'DB\Cursor')) {
 			$this->storage=$storage->dbtype();
+=======
+		$fw->error(401);
+	}
+
+	/**
+		Instantiate class
+		@return object
+		@param $storage string|object
+		@param $args array
+	**/
+	function __construct($storage,array $args=NULL) {
+		if (is_object($storage) && is_a($storage,'DB\Cursor')) {
+			$ref=new ReflectionClass(get_class($storage));
+			$this->storage=basename(dirname($ref->getfilename()));
+>>>>>>> 3.0.4 release
 			$this->mapper=$storage;
 			unset($ref);
 		}

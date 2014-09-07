@@ -1,7 +1,11 @@
 <?php
 
 /*
+<<<<<<< HEAD
 	Copyright (c) 2009-2014 F3::Factory/Bong Cosca, All rights reserved.
+=======
+	Copyright (c) 2009-2012 F3::Factory/Bong Cosca, All rights reserved.
+>>>>>>> 3.0.4 release
 
 	This file is part of the Fat-Free Framework (http://fatfree.sf.net).
 
@@ -18,16 +22,31 @@ namespace Web;
 //! OpenID consumer
 class OpenID extends \Magic {
 
+<<<<<<< HEAD
 	protected
 		//! OpenID provider endpoint URL
 		$url,
+=======
+	//@{ Error messages
+	const
+		E_EndPoint='Unable to find OpenID provider';
+	//@}
+
+	var
+>>>>>>> 3.0.4 release
 		//! HTTP request parameters
 		$args=array();
 
 	/**
+<<<<<<< HEAD
 	*	Determine OpenID provider
 	*	@return string|FALSE
 	*	@param $proxy string
+=======
+		Determine OpenID provider
+		@return string|FALSE
+		@param $proxy string
+>>>>>>> 3.0.4 release
 	**/
 	protected function discover($proxy) {
 		// Normalize
@@ -44,8 +63,11 @@ class OpenID extends \Magic {
 		// HTML-based discovery of OpenID provider
 		$req=\Web::instance()->
 			request($this->args['identity'],array('proxy'=>$proxy));
+<<<<<<< HEAD
 		if (!$req)
 			return FALSE;
+=======
+>>>>>>> 3.0.4 release
 		$type=array_values(preg_grep('/Content-Type:/',$req['headers']));
 		if ($type &&
 			preg_match('/application\/xrds\+xml|text\/xml/',$type[0]) &&
@@ -77,11 +99,19 @@ class OpenID extends \Magic {
 					'/^<link\b((?:\h+\w+\h*=\h*'.
 					'(?:"(?:.+?)"|\'(?:.+?)\'))*)\h*\/?>/is',
 					substr($req['body'],$ptr),$parts)) {
+<<<<<<< HEAD
 					if ($parts[1] &&
 						// Process attributes
 						preg_match_all('/\b(rel|href)\h*=\h*'.
 							'(?:"(.+?)"|\'(.+?)\')/s',$parts[1],$attr,
 							PREG_SET_ORDER)) {
+=======
+					if ($parts[1]) {
+						// Process attributes
+						preg_match_all('/\b(rel|href)\h*=\h*'.
+							'(?:"(.+?)"|\'(.+?)\')/s',$parts[1],$attr,
+							PREG_SET_ORDER);
+>>>>>>> 3.0.4 release
 						$node=array();
 						foreach ($attr as $kv)
 							$node[$kv[1]]=isset($kv[2])?$kv[2]:$kv[3];
@@ -108,7 +138,10 @@ class OpenID extends \Magic {
 		}
 		elseif (isset($this->args['server'])) {
 			// OpenID 1.1
+<<<<<<< HEAD
 			$this->args['ns']='http://openid.net/signon/1.1';
+=======
+>>>>>>> 3.0.4 release
 			if (isset($this->args['delegate']))
 				$this->args['identity']=$this->args['delegate'];
 		}
@@ -126,6 +159,7 @@ class OpenID extends \Magic {
 	}
 
 	/**
+<<<<<<< HEAD
 	*	Initiate OpenID authentication sequence; Return FALSE on failure
 	*	or redirect to OpenID provider URL
 	*	@return bool
@@ -134,6 +168,14 @@ class OpenID extends \Magic {
 	*	@param $reqd string|array
 	**/
 	function auth($proxy=NULL,$attr=array(),array $reqd=NULL) {
+=======
+		Initiate OpenID authentication sequence; Return FALSE on failure
+		or redirect to OpenID provider URL
+		@return bool
+		@param $proxy string
+	**/
+	function auth($proxy=NULL) {
+>>>>>>> 3.0.4 release
 		$fw=\Base::instance();
 		$root=$fw->get('SCHEME').'://'.$fw->get('HOST');
 		if (empty($this->args['trust_root']))
@@ -141,6 +183,7 @@ class OpenID extends \Magic {
 		if (empty($this->args['return_to']))
 			$this->args['return_to']=$root.$_SERVER['REQUEST_URI'];
 		$this->args['mode']='checkid_setup';
+<<<<<<< HEAD
 		if ($this->url=$this->discover($proxy)) {
 			if ($attr) {
 				$this->args['ns.ax']='http://openid.net/srv/ax/1.0';
@@ -154,11 +197,19 @@ class OpenID extends \Magic {
 			foreach ($this->args as $key=>$val)
 				$var['openid.'.$key]=$val;
 			$fw->reroute($this->url.'?'.http_build_query($var));
+=======
+		if ($url=$this->discover($proxy)) {
+			$var=array();
+			foreach ($this->args as $key=>$val)
+				$var['openid.'.$key]=$val;
+			$fw->reroute($url.'?'.http_build_query($var));
+>>>>>>> 3.0.4 release
 		}
 		return FALSE;
 	}
 
 	/**
+<<<<<<< HEAD
 	*	Return TRUE if OpenID verification was successful
 	*	@return bool
 	*	@param $proxy string
@@ -171,24 +222,44 @@ class OpenID extends \Magic {
 		if (isset($this->args['mode']) &&
 			$this->args['mode']!='error' &&
 			$this->url=$this->discover($proxy)) {
+=======
+		Return TRUE if OpenID verification was successful
+		@return bool
+		@param $proxy string
+	**/
+	function verified($proxy=NULL) {
+		foreach ($_GET as $key=>$val)
+			if (preg_match('/^openid_(.+)/',$key,$match))
+				$this->args[$match[1]]=$val;
+		if ($url=$this->discover($proxy)) {
+>>>>>>> 3.0.4 release
 			$this->args['mode']='check_authentication';
 			$var=array();
 			foreach ($this->args as $key=>$val)
 				$var['openid.'.$key]=$val;
 			$req=\Web::instance()->request(
+<<<<<<< HEAD
 				$this->url,
+=======
+				$url,
+>>>>>>> 3.0.4 release
 				array(
 					'method'=>'POST',
 					'content'=>http_build_query($var),
 					'proxy'=>$proxy
 				)
 			);
+<<<<<<< HEAD
 			return (bool)preg_match('/is_valid:true/i',$req['body']);
+=======
+			return preg_match('/is_valid:true/i',$req['body']);
+>>>>>>> 3.0.4 release
 		}
 		return FALSE;
 	}
 
 	/**
+<<<<<<< HEAD
 	*	Return OpenID response fields
 	*	@return array
 	**/
@@ -200,22 +271,35 @@ class OpenID extends \Magic {
 	*	Return TRUE if OpenID request parameter exists
 	*	@return bool
 	*	@param $key string
+=======
+		Return TRUE if OpenID request parameter exists
+		@return bool
+		@param $key string
+>>>>>>> 3.0.4 release
 	**/
 	function exists($key) {
 		return isset($this->args[$key]);
 	}
 
 	/**
+<<<<<<< HEAD
 	*	Bind value to OpenID request parameter
 	*	@return string
 	*	@param $key string
 	*	@param $val string
+=======
+		Bind value to OpenID request parameter
+		@return string
+		@param $key string
+		@param $val string
+>>>>>>> 3.0.4 release
 	**/
 	function set($key,$val) {
 		return $this->args[$key]=$val;
 	}
 
 	/**
+<<<<<<< HEAD
 	*	Return value of OpenID request parameter
 	*	@return mixed
 	*	@param $key string
@@ -232,10 +316,26 @@ class OpenID extends \Magic {
 	*	Remove OpenID request parameter
 	*	@return NULL
 	*	@param $key
+=======
+		Return value of OpenID request parameter
+		@return mixed
+		@param $key string
+	**/
+	function get($key) {
+		return isset($this->args[$key])?$this->args[$key]:NULL;
+	}
+
+	/**
+		Remove OpenID request parameter
+		@param $key
+>>>>>>> 3.0.4 release
 	**/
 	function clear($key) {
 		unset($this->args[$key]);
 	}
 
 }
+<<<<<<< HEAD
 
+=======
+>>>>>>> 3.0.4 release

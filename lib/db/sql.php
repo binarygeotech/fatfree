@@ -1,7 +1,14 @@
 <?php
 
+<<<<<<< HEAD
 /*
 	Copyright (c) 2009-2014 F3::Factory/Bong Cosca, All rights reserved.
+=======
+namespace DB;
+
+/*
+	Copyright (c) 2009-2012 F3::Factory/Bong Cosca, All rights reserved.
+>>>>>>> 3.0.4 release
 
 	This file is part of the Fat-Free Framework (http://fatfree.sf.net).
 
@@ -13,6 +20,7 @@
 	Please see the license.txt file for more information.
 */
 
+<<<<<<< HEAD
 namespace DB;
 
 //! PDO wrapper
@@ -23,6 +31,12 @@ class SQL extends \PDO {
 		$uuid,
 		//! Data source name
 		$dsn,
+=======
+//! PDO wrapper
+class SQL extends \PDO {
+
+	private
+>>>>>>> 3.0.4 release
 		//! Database engine
 		$engine,
 		//! Database name
@@ -35,6 +49,7 @@ class SQL extends \PDO {
 		$log;
 
 	/**
+<<<<<<< HEAD
 	*	Begin SQL transaction
 	*	@return bool
 	**/
@@ -68,6 +83,38 @@ class SQL extends \PDO {
 	*	Map data type of argument to a PDO constant
 	*	@return int
 	*	@param $val scalar
+=======
+		Begin SQL transaction
+		@return NULL
+	**/
+	function begin() {
+		parent::begintransaction();
+		$this->trans=TRUE;
+	}
+
+	/**
+		Rollback SQL transaction
+		@return NULL
+	**/
+	function rollback() {
+		parent::rollback();
+		$this->trans=FALSE;
+	}
+
+	/**
+		Commit SQL transaction
+		@return NULL
+	**/
+	function commit() {
+		parent::commit();
+		$this->trans=FALSE;
+	}
+
+	/**
+		Map data type of argument to a PDO constant
+		@return int
+		@param $val scalar
+>>>>>>> 3.0.4 release
 	**/
 	function type($val) {
 		switch (gettype($val)) {
@@ -82,6 +129,7 @@ class SQL extends \PDO {
 		}
 	}
 
+<<<<<<< HEAD
 	/**
 	*	Cast value to PHP type
 	*	@return scalar
@@ -114,6 +162,21 @@ class SQL extends \PDO {
 		if (is_null($args))
 			$args=array();
 		elseif (is_scalar($args))
+=======
+
+	/**
+		Execute SQL statement(s)
+		@return array|int|FALSE
+		@param $cmds string|array
+		@param $args string|array
+		@param $ttl int
+	**/
+	function exec($cmds,$args=NULL,$ttl=0) {
+		$auto=FALSE;
+		if (is_null($args))
+			$args=array();
+		elseif (is_string($args))
+>>>>>>> 3.0.4 release
 			$args=array(1=>$args);
 		if (is_array($cmds)) {
 			if (count($args)<($count=count($cmds)))
@@ -130,6 +193,7 @@ class SQL extends \PDO {
 		}
 		$fw=\Base::instance();
 		$cache=\Cache::instance();
+<<<<<<< HEAD
 		$result=FALSE;
 		foreach (array_combine($cmds,$args) as $cmd=>$arg) {
 			if (!preg_replace('/(^\s+|[\s;]+$)/','',$cmd))
@@ -143,6 +207,17 @@ class SQL extends \PDO {
 				foreach ($arg as $key=>$val) {
 					$vals[]=$fw->stringify(is_array($val)?$val[0]:$val);
 					$keys[]='/'.preg_quote(is_numeric($key)?chr(0).'?':$key).'/';
+=======
+		foreach (array_combine($cmds,$args) as $cmd=>$arg) {
+			$now=microtime(TRUE);
+			$keys=$vals=array();
+			if ($fw->get('CACHE') && $ttl && ($cached=$cache->exists(
+				$hash=$fw->hash($cmd.$fw->stringify($arg)).'.sql',
+				$result)) && $cached+$ttl>microtime(TRUE)) {
+				foreach ($arg as $key=>$val) {
+					$vals[]=$fw->stringify(is_array($val)?$val[0]:$val);
+					$keys[]='/'.(is_numeric($key)?'\?':preg_quote($key)).'/';
+>>>>>>> 3.0.4 release
 				}
 			}
 			elseif (is_object($query=$this->prepare($cmd))) {
@@ -150,6 +225,7 @@ class SQL extends \PDO {
 					if (is_array($val)) {
 						// User-specified data type
 						$query->bindvalue($key,$val[0],$val[1]);
+<<<<<<< HEAD
 						$vals[]=$fw->stringify($this->value($val[1],$val[0]));
 					}
 					else {
@@ -159,6 +235,16 @@ class SQL extends \PDO {
 						$vals[]=$fw->stringify($this->value($type,$val));
 					}
 					$keys[]='/'.preg_quote(is_numeric($key)?chr(0).'?':$key).'/';
+=======
+						$vals[]=$fw->stringify($val[0]);
+					}
+					else {
+						// Convert to PDO data type
+						$query->bindvalue($key,$val,$this->type($val));
+						$vals[]=$fw->stringify($val);
+					}
+					$keys[]='/'.(is_numeric($key)?'\?':preg_quote($key)).'/';
+>>>>>>> 3.0.4 release
 				}
 				$query->execute();
 				$error=$query->errorinfo();
@@ -168,6 +254,7 @@ class SQL extends \PDO {
 						$this->rollback();
 					user_error('PDOStatement: '.$error[2]);
 				}
+<<<<<<< HEAD
 				if (preg_match('/^\s*'.
 					'(?:CALL|EXPLAIN|SELECT|PRAGMA|SHOW|RETURNING|EXEC)\b/is',
 					$cmd)) {
@@ -180,6 +267,11 @@ class SQL extends \PDO {
 							foreach ($rec as $key=>$val)
 								$result[$pos][trim($key,'\'"[]`')]=$val;
 						}
+=======
+				if (preg_match(
+					'/\b(?:CALL|EXPLAIN|SELECT|PRAGMA|SHOW)\b/i',$cmd)) {
+					$result=$query->fetchall(\PDO::FETCH_ASSOC);
+>>>>>>> 3.0.4 release
 					$this->rows=count($result);
 					if ($fw->get('CACHE') && $ttl)
 						// Save to cache backend
@@ -199,12 +291,18 @@ class SQL extends \PDO {
 					user_error('PDO: '.$error[2]);
 				}
 			}
+<<<<<<< HEAD
 			if ($log)
 				$this->log.=date('r').' ('.
 					sprintf('%.1f',1e3*(microtime(TRUE)-$now)).'ms) '.
 					(empty($cached)?'':'[CACHED] ').
 					preg_replace($keys,$vals,
 						str_replace('?',chr(0).'?',$cmd),1).PHP_EOL;
+=======
+			$this->log.=date('r').' ('.
+				sprintf('%.1f',1e3*(microtime(TRUE)-$now)).'ms) '.
+				preg_replace($keys,$vals,$cmd,1).PHP_EOL;
+>>>>>>> 3.0.4 release
 		}
 		if ($this->trans && $auto)
 			$this->commit();
@@ -212,22 +310,33 @@ class SQL extends \PDO {
 	}
 
 	/**
+<<<<<<< HEAD
 	*	Return number of rows affected by last query
 	*	@return int
+=======
+		Return number of rows affected by last query
+		@return int
+>>>>>>> 3.0.4 release
 	**/
 	function count() {
 		return $this->rows;
 	}
 
 	/**
+<<<<<<< HEAD
 	*	Return SQL profiler results
 	*	@return string
+=======
+		Return SQL profiler results
+		@return string
+>>>>>>> 3.0.4 release
 	**/
 	function log() {
 		return $this->log;
 	}
 
 	/**
+<<<<<<< HEAD
 	*	Retrieve schema of SQL table
 	*	@return array|FALSE
 	*	@param $table string
@@ -242,6 +351,21 @@ class SQL extends \PDO {
 				'name','type','dflt_value','notnull',0,'pk',TRUE),
 			'mysql'=>array(
 				'SHOW columns FROM `'.$this->dbname.'`.`'.$table.'`;',
+=======
+		Retrieve schema of SQL table
+		@return array|FALSE
+		@param $table string
+		@param $ttl int
+	**/
+	function schema($table,$ttl=0) {
+		// Supported engines
+		$cmd=array(
+			'sqlite2?'=>array(
+				'PRAGMA table_info('.$table.');',
+				'name','type','dflt_value','notnull',0,'pk',1),
+			'mysql'=>array(
+				'SHOW columns FROM `'.$this->dbname.'`.'.$table.';',
+>>>>>>> 3.0.4 release
 				'Field','Type','Default','Null','YES','Key','PRI'),
 			'mssql|sqlsrv|sybase|dblib|pgsql|odbc'=>array(
 				'SELECT '.
@@ -255,6 +379,7 @@ class SQL extends \PDO {
 					'information_schema.key_column_usage AS k '.
 					'ON '.
 						'c.table_name=k.table_name AND '.
+<<<<<<< HEAD
 						'c.column_name=k.column_name AND '.
 						'c.table_schema=k.table_schema '.
 						($this->dbname?
@@ -312,12 +437,56 @@ class SQL extends \PDO {
 							'pkey'=>$row[$val[6]]==$val[7]
 						);
 				}
+=======
+						'c.column_name=k.column_name '.
+						($this->dbname?
+							('AND '.
+							($this->engine=='pgsql'?
+								'c.table_catalog=k.table_catalog':
+								'c.table_schema=k.table_schema').' '):'').
+				'LEFT OUTER JOIN '.
+					'information_schema.table_constraints AS t ON '.
+						'k.table_name=t.table_name AND '.
+						'k.constraint_name=t.constraint_name '.
+						($this->dbname?
+							('AND '.
+							($this->engine=='pgsql'?
+								'k.table_catalog=t.table_catalog':
+								'k.table_schema=t.table_schema').' '):'').
+				'WHERE '.
+					'c.table_name='.
+						($this->quote($table)?:('"'.$table.'"')).' '.
+					($this->dbname?
+						('AND '.
+							($this->engine=='pgsql'?
+							'c.table_catalog':'c.table_schema').
+							'='.($this->quote($this->dbname)?:
+								('"'.$this->dbname.'"'))):'').
+				';',
+				'field','type','defval','nullable','YES','pkey','PRIMARY KEY')
+		);
+		foreach ($cmd as $key=>$val)
+			if (preg_match('/'.$key.'/',$this->engine)) {
+				$rows=array();
+				foreach ($this->exec($val[0],NULL,$ttl) as $row)
+					$rows[$row[$val[1]]]=array(
+						'type'=>$row[$val[2]],
+						'pdo_type'=>
+							preg_match('/int|bool/i',$row[$val[2]],$parts)?
+							constant('\PDO::PARAM_'.strtoupper($parts[0])):
+							\PDO::PARAM_STR,
+						'default'=>$row[$val[3]],
+						'nullable'=>$row[$val[4]]==$val[5],
+						'pkey'=>$row[$val[6]]==$val[7]
+					);
+>>>>>>> 3.0.4 release
 				return $rows;
 			}
 		return FALSE;
 	}
 
 	/**
+<<<<<<< HEAD
 	*	Quote string
 	*	@return string
 	*	@param $val mixed
@@ -342,28 +511,43 @@ class SQL extends \PDO {
 	/**
 	*	Return database engine
 	*	@return string
+=======
+		Return database engine
+		@return string
+>>>>>>> 3.0.4 release
 	**/
 	function driver() {
 		return $this->engine;
 	}
 
 	/**
+<<<<<<< HEAD
 	*	Return server version
 	*	@return string
+=======
+		Return server version
+		@return string
+>>>>>>> 3.0.4 release
 	**/
 	function version() {
 		return parent::getattribute(parent::ATTR_SERVER_VERSION);
 	}
 
 	/**
+<<<<<<< HEAD
 	*	Return database name
 	*	@return string
+=======
+		Return database name
+		@return string
+>>>>>>> 3.0.4 release
 	**/
 	function name() {
 		return $this->dbname;
 	}
 
 	/**
+<<<<<<< HEAD
 	*	Return quoted identifier name
 	*	@return string
 	*	@param $key
@@ -390,13 +574,30 @@ class SQL extends \PDO {
 	function __construct($dsn,$user=NULL,$pw=NULL,array $options=NULL) {
 		$fw=\Base::instance();
 		$this->uuid=$fw->hash($this->dsn=$dsn);
+=======
+		Instantiate class
+		@param $dsn string
+		@param $user string
+		@param $pw string
+		@param $options array
+	**/
+	function __construct($dsn,$user=NULL,$pw=NULL,array $options=NULL) {
+>>>>>>> 3.0.4 release
 		if (preg_match('/^.+?(?:dbname|database)=(.+?)(?=;|$)/i',$dsn,$parts))
 			$this->dbname=$parts[1];
 		if (!$options)
 			$options=array();
+<<<<<<< HEAD
 		if (isset($parts[0]) && strstr($parts[0],':',TRUE)=='mysql')
 			$options+=array(\PDO::MYSQL_ATTR_INIT_COMMAND=>'SET NAMES '.
 				strtolower(str_replace('-','',$fw->get('ENCODING'))).';');
+=======
+		$options+=array(\PDO::ATTR_EMULATE_PREPARES=>FALSE);
+		if (isset($parts[0]) && strstr($parts[0],':',TRUE)=='mysql')
+			$options+=array(\PDO::MYSQL_ATTR_INIT_COMMAND=>'SET NAMES '.
+				strtolower(str_replace('-','',
+					\Base::instance()->get('ENCODING'))).';');
+>>>>>>> 3.0.4 release
 		parent::__construct($dsn,$user,$pw,$options);
 		$this->engine=parent::getattribute(parent::ATTR_DRIVER_NAME);
 	}
