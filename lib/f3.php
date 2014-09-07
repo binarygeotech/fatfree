@@ -1,11 +1,7 @@
 <?php
 
 /*
-<<<<<<< HEAD
 	Copyright (c) 2009-2014 F3::Factory/Bong Cosca, All rights reserved.
-=======
-	Copyright (c) 2009-2012 F3::Factory/Bong Cosca, All rights reserved.
->>>>>>> 3.0.4 release
 
 	This file is part of the Fat-Free Framework (http://fatfree.sf.net).
 
@@ -25,17 +21,10 @@ class F3 {
 		$fw;
 
 	/**
-<<<<<<< HEAD
 	*	Forward function calls to framework
 	*	@return mixed
 	*	@param $func callback
 	*	@param $args array
-=======
-		Forward function calls to framework
-		@return mixed
-		@param $func callback
-		@param $args array
->>>>>>> 3.0.4 release
 	**/
 	static function __callstatic($func,array $args) {
 		if (!self::$fw)

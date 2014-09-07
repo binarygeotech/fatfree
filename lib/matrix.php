@@ -1,11 +1,7 @@
 <?php
 
 /*
-<<<<<<< HEAD
 	Copyright (c) 2009-2014 F3::Factory/Bong Cosca, All rights reserved.
-=======
-	Copyright (c) 2009-2012 F3::Factory/Bong Cosca, All rights reserved.
->>>>>>> 3.0.4 release
 
 	This file is part of the Fat-Free Framework (http://fatfree.sf.net).
 
@@ -21,19 +17,11 @@
 class Matrix extends Prefab {
 
 	/**
-<<<<<<< HEAD
 	*	Retrieve values from a specified column of a multi-dimensional
 	*	array variable
 	*	@return array
 	*	@param $var array
 	*	@param $col mixed
-=======
-		Retrieve values from a specified column of a multi-dimensional
-		array variable
-		@return array
-		@param $var array
-		@param $col mixed
->>>>>>> 3.0.4 release
 	**/
 	function pick(array $var,$col) {
 		return array_map(
@@ -45,15 +33,9 @@ class Matrix extends Prefab {
 	}
 
 	/**
-<<<<<<< HEAD
 	*	Rotate a two-dimensional array variable
 	*	@return NULL
 	*	@param $var array
-=======
-		Rotate a two-dimensional array variable
-		@return NULL
-		@param $var array
->>>>>>> 3.0.4 release
 	**/
 	function transpose(array &$var) {
 		$out=array();
@@ -64,19 +46,11 @@ class Matrix extends Prefab {
 	}
 
 	/**
-<<<<<<< HEAD
 	*	Sort a multi-dimensional array variable on a specified column
 	*	@return bool
 	*	@param $var array
 	*	@param $col mixed
 	*	@param $order int
-=======
-		Sort a multi-dimensional array variable on a specified column
-		@return bool
-		@param $var array
-		@param $col mixed
-		@param $order int
->>>>>>> 3.0.4 release
 	**/
 	function sort(array &$var,$col,$order=SORT_ASC) {
 		uasort(
@@ -94,19 +68,11 @@ class Matrix extends Prefab {
 	}
 
 	/**
-<<<<<<< HEAD
 	*	Change the key of a two-dimensional array element
 	*	@return NULL
 	*	@param $var array
 	*	@param $old string
 	*	@param $new string
-=======
-		Change the key of a two-dimensional array element
-		@return NULL
-		@param $var array
-		@param $old string
-		@param $new string
->>>>>>> 3.0.4 release
 	**/
 	function changekey(array &$var,$old,$new) {
 		$keys=array_keys($var);
@@ -116,19 +82,11 @@ class Matrix extends Prefab {
 	}
 
 	/**
-<<<<<<< HEAD
 	*	Return month calendar of specified date, with optional setting for
 	*	first day of week (0 for Sunday)
 	*	@return array
 	*	@param $date string
 	*	@param $first int
-=======
-		Return month calendar of specified date, with optional setting for
-		first day of week (0 for Sunday)
-		@return array
-		@param $date string
-		@param $first int
->>>>>>> 3.0.4 release
 	**/
 	function calendar($date='now',$first=0) {
 		$parts=getdate(strtotime($date));

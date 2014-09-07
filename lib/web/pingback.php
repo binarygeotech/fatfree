@@ -1,11 +1,7 @@
 <?php
 
 /*
-<<<<<<< HEAD
 	Copyright (c) 2009-2014 F3::Factory/Bong Cosca, All rights reserved.
-=======
-	Copyright (c) 2009-2012 F3::Factory/Bong Cosca, All rights reserved.
->>>>>>> 3.0.4 release
 
 	This file is part of the Fat-Free Framework (http://fatfree.sf.net).
 
@@ -22,24 +18,14 @@ namespace Web;
 //! Pingback 1.0 protocol (client and server) implementation
 class Pingback extends \Prefab {
 
-<<<<<<< HEAD
 	protected
-=======
-	private
->>>>>>> 3.0.4 release
 		//! Transaction history
 		$log;
 
 	/**
-<<<<<<< HEAD
 	*	Return TRUE if URL points to a pingback-enabled resource
 	*	@return bool
 	*	@param $url
-=======
-		Return TRUE if URL points to a pingback-enabled resource
-		@return bool
-		@param $url
->>>>>>> 3.0.4 release
 	**/
 	protected function enabled($url) {
 		$web=\Web::instance();
@@ -63,17 +49,10 @@ class Pingback extends \Prefab {
 	}
 
 	/**
-<<<<<<< HEAD
 	*	Load local page contents, parse HTML anchor tags, find permalinks,
 	*	and send XML-RPC calls to corresponding pingback servers
 	*	@return NULL
 	*	@param $source string
-=======
-		Load local page contents, parse HTML anchor tags, find permalinks,
-		and send XML-RPC calls to corresponding pingback servers
-		@return NULL
-		@param $source string
->>>>>>> 3.0.4 release
 	**/
 	function inspect($source) {
 		$fw=\Base::instance();
@@ -115,19 +94,11 @@ class Pingback extends \Prefab {
 	}
 
 	/**
-<<<<<<< HEAD
 	*	Receive ping, check if local page is pingback-enabled, verify
 	*	source contents, and return XML-RPC response
 	*	@return string
 	*	@param $func callback
 	*	@param $path string
-=======
-		Receive ping, check if local page is pingback-enabled, verify
-		source contents, and return XML-RPC response
-		@return string
-		@param $func callback
-		@param $path string
->>>>>>> 3.0.4 release
 	**/
 	function listen($func,$path=NULL) {
 		$fw=\Base::instance();
@@ -180,26 +151,16 @@ class Pingback extends \Prefab {
 	}
 
 	/**
-<<<<<<< HEAD
 	*	Return transaction history
 	*	@return string
-=======
-		Return transaction history
-		@return string
->>>>>>> 3.0.4 release
 	**/
 	function log() {
 		return $this->log;
 	}
 
 	/**
-<<<<<<< HEAD
 	*	Instantiate class
 	*	@return object
-=======
-		Instantiate class
-		@return object
->>>>>>> 3.0.4 release
 	**/
 	function __construct() {
 		// Suppress errors caused by invalid HTML structures

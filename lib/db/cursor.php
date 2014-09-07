@@ -1,11 +1,7 @@
 <?php
 
 /*
-<<<<<<< HEAD
 	Copyright (c) 2009-2014 F3::Factory/Bong Cosca, All rights reserved.
-=======
-	Copyright (c) 2009-2012 F3::Factory/Bong Cosca, All rights reserved.
->>>>>>> 3.0.4 release
 
 	This file is part of the Fat-Free Framework (http://fatfree.sf.net).
 
@@ -31,7 +27,6 @@ abstract class Cursor extends \Magic {
 		//! Query results
 		$query=array(),
 		//! Current position
-<<<<<<< HEAD
 		$ptr=0,
 		//! Event listeners
 		$trigger=array();
@@ -46,19 +41,10 @@ abstract class Cursor extends \Magic {
 	*	Return fields of mapper object as an associative array
 	*	@return array
 	*	@param $obj object
-=======
-		$ptr=0;
-
-	/**
-		Return fields of mapper object as an associative array
-		@return array
-		@param $obj object
->>>>>>> 3.0.4 release
 	**/
 	abstract function cast($obj=NULL);
 
 	/**
-<<<<<<< HEAD
 	*	Return records (array of mapper objects) that match criteria
 	*	@return array
 	*	@param $filter string|array
@@ -78,34 +64,16 @@ abstract class Cursor extends \Magic {
 	/**
 	*	Insert new record
 	*	@return array
-=======
-		Return records (array of mapper objects) that match criteria
-		@return array
-		@param $filter string|array
-		@param $options array
-	**/
-	abstract function find($filter=NULL,array $options=NULL);
-
-	/**
-		Insert new record
-		@return array
->>>>>>> 3.0.4 release
 	**/
 	abstract function insert();
 
 	/**
-<<<<<<< HEAD
 	*	Update current record
 	*	@return array
-=======
-		Update current record
-		@return array
->>>>>>> 3.0.4 release
 	**/
 	abstract function update();
 
 	/**
-<<<<<<< HEAD
 	*	Hydrate mapper object using hive array variable
 	*	@return NULL
 	*	@param $key string
@@ -155,62 +123,11 @@ abstract class Cursor extends \Magic {
 		$total=$this->count($filter,$ttl);
 		$count=ceil($total/$size);
 		$pos=max(0,min($pos,$count-1));
-=======
-		Return TRUE if current cursor position is not mapped to any record
-		@return bool
-	**/
-	function dry() {
-		return empty($this->query[$this->ptr]);
-	}
-
-	/**
-		Return first record (mapper object) that matches criteria
-		@return object|FALSE
-		@param $filter string|array
-		@param $options array
-	**/
-	function findone($filter=NULL,array $options=NULL) {
-		return ($data=$this->find($filter,$options))?$data[0]:FALSE;
-	}
-
-	/**
-		Return records (array of associative arrays) that match criteria
-		@return array
-		@param $filter string|array
-		@param $options array
-	**/
-	function afind($filter=NULL,array $options=NULL) {
-		return array_map(array($this,'cast'),$this->find($filter,$options));
-	}
-
-	/**
-		Return first record (associative array) that matches criteria
-		@return array|FALSE
-		@param $filter string|array
-		@param $options array
-	**/
-	function afindone($filter=NULL,array $options=NULL) {
-		return ($found=$this->findone($filter,$options))?
-			$found->cast():FALSE;
-	}
-
-	/**
-		Return array containing subset of records matching criteria,
-		number of subsets available, and actual subset position
-		@return array
-		@param $pos int
-		@param $size int
-		@param $filter string|array
-		@param $options array
-	**/
-	function paginate($pos=0,$size=10,$filter=NULL,array $options=NULL) {
->>>>>>> 3.0.4 release
 		return array(
 			'subset'=>$this->find($filter,
 				array_merge(
 					$options?:array(),
 					array('limit'=>$size,'offset'=>$pos*$size)
-<<<<<<< HEAD
 				),
 				$ttl
 			),
@@ -218,17 +135,10 @@ abstract class Cursor extends \Magic {
 			'limit'=>$size,
 			'count'=>$count,
 			'pos'=>$pos<$count?$pos:0
-=======
-				)
-			),
-			'count'=>($count=ceil($this->count($filter,$options)/$size)),
-			'pos'=>($pos && $pos<$count?$pos:NULL)
->>>>>>> 3.0.4 release
 		);
 	}
 
 	/**
-<<<<<<< HEAD
 	*	Map to first record that matches criteria
 	*	@return array|FALSE
 	*	@param $filter string|array
@@ -237,20 +147,10 @@ abstract class Cursor extends \Magic {
 	**/
 	function load($filter=NULL,array $options=NULL,$ttl=0) {
 		return ($this->query=$this->find($filter,$options,$ttl)) &&
-=======
-		Map to first record that matches criteria
-		@return array|FALSE
-		@param $filter string|array
-		@param $options array
-	**/
-	function load($filter=NULL,array $options=NULL) {
-		return ($this->query=$this->find($filter,$options)) &&
->>>>>>> 3.0.4 release
 			$this->skip(0)?$this->query[$this->ptr=0]:FALSE;
 	}
 
 	/**
-<<<<<<< HEAD
 	*	Return the count of records loaded
 	*	@return int
 	**/
@@ -278,27 +178,6 @@ abstract class Cursor extends \Magic {
 	*	Map to nth record relative to current cursor position
 	*	@return mixed
 	*	@param $ofs int
-=======
-		Move pointer to first record in cursor
-		@return mixed
-	**/
-	function first() {
-		return $this->query[$this->ptr=0];
-	}
-
-	/**
-		Move pointer to last record in cursor
-		@return mixed
-	**/
-	function last() {
-		return $this->query[$this->ptr=($ctr=count($this->query))?$ctr-1:0];
-	}
-
-	/**
-		Map to nth record relative to current cursor position
-		@return mixed
-		@param $ofs int
->>>>>>> 3.0.4 release
 	**/
 	function skip($ofs=1) {
 		$this->ptr+=$ofs;
@@ -307,52 +186,32 @@ abstract class Cursor extends \Magic {
 	}
 
 	/**
-<<<<<<< HEAD
 	*	Map next record
 	*	@return mixed
-=======
-		Map next record
-		@return mixed
->>>>>>> 3.0.4 release
 	**/
 	function next() {
 		return $this->skip();
 	}
 
 	/**
-<<<<<<< HEAD
 	*	Map previous record
 	*	@return mixed
-=======
-		Map previous record
-		@return mixed
->>>>>>> 3.0.4 release
 	**/
 	function prev() {
 		return $this->skip(-1);
 	}
 
 	/**
-<<<<<<< HEAD
 	*	Save mapped record
 	*	@return mixed
-=======
-		Save mapped record
-		@return mixed
->>>>>>> 3.0.4 release
 	**/
 	function save() {
 		return $this->query?$this->update():$this->insert();
 	}
 
 	/**
-<<<<<<< HEAD
 	*	Delete current record
 	*	@return int|bool
-=======
-		Delete current record
-		@return int|bool
->>>>>>> 3.0.4 release
 	**/
 	function erase() {
 		$this->query=array_slice($this->query,0,$this->ptr,TRUE)+
@@ -361,7 +220,6 @@ abstract class Cursor extends \Magic {
 	}
 
 	/**
-<<<<<<< HEAD
 	*	Define onload trigger
 	*	@return callback
 	*	@param $func callback
@@ -454,10 +312,6 @@ abstract class Cursor extends \Magic {
 	/**
 	*	Reset cursor
 	*	@return NULL
-=======
-		Reset cursor
-		@return NULL
->>>>>>> 3.0.4 release
 	**/
 	function reset() {
 		$this->query=array();

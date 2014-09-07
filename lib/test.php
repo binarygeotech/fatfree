@@ -1,11 +1,7 @@
 <?php
 
 /*
-<<<<<<< HEAD
 	Copyright (c) 2009-2014 F3::Factory/Bong Cosca, All rights reserved.
-=======
-	Copyright (c) 2009-2012 F3::Factory/Bong Cosca, All rights reserved.
->>>>>>> 3.0.4 release
 
 	This file is part of the Fat-Free Framework (http://fatfree.sf.net).
 
@@ -20,7 +16,6 @@
 //! Unit test kit
 class Test {
 
-<<<<<<< HEAD
 	//@{ Reporting level
 	const
 		FLAG_False=0,
@@ -29,27 +24,18 @@ class Test {
 	//@}
 
 	protected
-=======
-	private
->>>>>>> 3.0.4 release
 		//! Test results
 		$data=array();
 
 	/**
-<<<<<<< HEAD
 	*	Return test results
 	*	@return array
-=======
-		Return test results
-		@return array
->>>>>>> 3.0.4 release
 	**/
 	function results() {
 		return $this->data;
 	}
 
 	/**
-<<<<<<< HEAD
 	*	Evaluate condition and save test result
 	*	@return object
 	*	@param $cond bool
@@ -74,37 +60,11 @@ class Test {
 	*	Append message to test results
 	*	@return NULL
 	*	@param $text string
-=======
-		Evaluate condition and save test result
-		@return NULL
-		@param $cond bool
-		@param $text string
-	**/
-	function expect($cond,$text=NULL) {
-		$out=(bool)$cond;
-		foreach (debug_backtrace() as $frame)
-			if (isset($frame['file'])) {
-				$this->data[]=array(
-					'status'=>$out,
-					'text'=>$text,
-					'source'=>Base::instance()->
-						fixslashes($frame['file']).':'.$frame['line']
-				);
-				break;
-			}
-	}
-
-	/**
-		Push message to test results
-		@return NULL
-		@param $text string
->>>>>>> 3.0.4 release
 	**/
 	function message($text) {
 		$this->expect(TRUE,$text);
 	}
 
-<<<<<<< HEAD
 	/**
 	*	Class constructor
 	*	@return NULL
@@ -114,6 +74,4 @@ class Test {
 		$this->level=$level;
 	}
 
-=======
->>>>>>> 3.0.4 release
 }

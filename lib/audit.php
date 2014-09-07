@@ -1,11 +1,7 @@
 <?php
 
 /*
-<<<<<<< HEAD
 	Copyright (c) 2009-2014 F3::Factory/Bong Cosca, All rights reserved.
-=======
-	Copyright (c) 2009-2012 F3::Factory/Bong Cosca, All rights reserved.
->>>>>>> 3.0.4 release
 
 	This file is part of the Fat-Free Framework (http://fatfree.sf.net).
 
@@ -20,7 +16,6 @@
 //! Data validator
 class Audit extends Prefab {
 
-<<<<<<< HEAD
 	//@{ User agents
 	const
 		UA_Mobile='android|blackberry|iphone|ipod|palm|windows\s+ce',
@@ -32,31 +27,17 @@ class Audit extends Prefab {
 	*	Return TRUE if string is a valid URL
 	*	@return bool
 	*	@param $str string
-=======
-	/**
-		Return TRUE if string is a valid URL
-		@return bool
-		@param $str string
->>>>>>> 3.0.4 release
 	**/
 	function url($str) {
 		return is_string(filter_var($str,FILTER_VALIDATE_URL));
 	}
 
 	/**
-<<<<<<< HEAD
 	*	Return TRUE if string is a valid e-mail address;
 	*	Check DNS MX records if specified
 	*	@return bool
 	*	@param $str string
 	*	@param $mx boolean
-=======
-		Return TRUE if string is a valid e-mail address;
-		Check DNS MX records if specified
-		@return bool
-		@param $str string
-		@param $mx boolean
->>>>>>> 3.0.4 release
 	**/
 	function email($str,$mx=TRUE) {
 		$hosts=array();
@@ -65,7 +46,6 @@ class Audit extends Prefab {
 	}
 
 	/**
-<<<<<<< HEAD
 	*	Return TRUE if string is a valid IPV4 address
 	*	@return bool
 	*	@param $addr string
@@ -78,35 +58,15 @@ class Audit extends Prefab {
 	*	Return TRUE if string is a valid IPV6 address
 	*	@return bool
 	*	@param $addr string
-=======
-		Return TRUE if string is a valid IPV4 address
-		@return bool
-		@param $addr string
-	**/
-	function ipv4($addr) {
-		return filter_var($addr,FILTER_VALIDATE_IP,FILTER_FLAG_IPV4);
-	}
-
-	/**
-		Return TRUE if string is a valid IPV6 address
-		@return bool
-		@param $addr string
->>>>>>> 3.0.4 release
 	**/
 	function ipv6($addr) {
 		return (bool)filter_var($addr,FILTER_VALIDATE_IP,FILTER_FLAG_IPV6);
 	}
 
 	/**
-<<<<<<< HEAD
 	*	Return TRUE if IP address is within private range
 	*	@return bool
 	*	@param $addr string
-=======
-		Return TRUE if IP address is within private range
-		@return bool
-		@param $addr string
->>>>>>> 3.0.4 release
 	**/
 	function isprivate($addr) {
 		return !(bool)filter_var($addr,FILTER_VALIDATE_IP,
@@ -114,15 +74,9 @@ class Audit extends Prefab {
 	}
 
 	/**
-<<<<<<< HEAD
 	*	Return TRUE if IP address is within reserved range
 	*	@return bool
 	*	@param $addr string
-=======
-		Return TRUE if IP address is within reserved range
-		@return bool
-		@param $addr string
->>>>>>> 3.0.4 release
 	**/
 	function isreserved($addr) {
 		return !(bool)filter_var($addr,FILTER_VALIDATE_IP,
@@ -130,15 +84,9 @@ class Audit extends Prefab {
 	}
 
 	/**
-<<<<<<< HEAD
 	*	Return TRUE if IP address is neither private nor reserved
 	*	@return bool
 	*	@param $addr string
-=======
-		Return TRUE if IP address is neither private nor reserved
-		@return bool
-		@param $addr string
->>>>>>> 3.0.4 release
 	**/
 	function ispublic($addr) {
 		return (bool)filter_var($addr,FILTER_VALIDATE_IP,
@@ -147,7 +95,6 @@ class Audit extends Prefab {
 	}
 
 	/**
-<<<<<<< HEAD
 	*	Return TRUE if user agent is a desktop browser
 	*	@return bool
 	**/
@@ -179,11 +126,6 @@ class Audit extends Prefab {
 	*	Return TRUE if specified ID has a valid (Luhn) Mod-10 check digit
 	*	@return bool
 	*	@param $id string
-=======
-		Return TRUE if specified ID has a valid (Luhn) Mod-10 check digit
-		@return bool
-		@param $id string
->>>>>>> 3.0.4 release
 	**/
 	function mod10($id) {
 		if (!ctype_digit($id))
@@ -196,15 +138,9 @@ class Audit extends Prefab {
 	}
 
 	/**
-<<<<<<< HEAD
 	*	Return credit card type if number is valid
 	*	@return string|FALSE
 	*	@param $id string
-=======
-		Return credit card type if number is valid
-		@return string|FALSE
-		@param $id string
->>>>>>> 3.0.4 release
 	**/
 	function card($id) {
 		$id=preg_replace('/[^\d]/','',$id);
@@ -225,7 +161,6 @@ class Audit extends Prefab {
 		return FALSE;
 	}
 
-<<<<<<< HEAD
 	/**
 	*	Return entropy estimate of a password (NIST 800-63)
 	*	@return int|float
@@ -239,6 +174,4 @@ class Audit extends Prefab {
 				'/[A-Z].*?[0-9[:punct:]]|[0-9[:punct:]].*?[A-Z]/',$str));
 	}
 
-=======
->>>>>>> 3.0.4 release
 }
